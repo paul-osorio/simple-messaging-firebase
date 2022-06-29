@@ -1,3 +1,18 @@
 body {
   font-family: "Roboto", sans-serif;
 }
+
+.homescrollbar::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f1f1f1;
+  border-radius: 20px;
+}
+.homescrollbar::-webkit-scrollbar-thumb {
+  background-color: lightgray;
+  border-radius: 20px;
+  scroll-behavior: smooth;
+}
+
+.homescrollbar {
+  scroll-behavior: smooth;
+}

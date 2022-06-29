@@ -2,7 +2,7 @@ import HamburgerMenu from "../../../../assets/svg/HamburgerMenu";
 
 const TopBar = () => {
   return (
-    <div className="relative py-5 bg-gradient-to-b from-indigo-700 to-indigo-500 rounded-b-[52px]">
+    <div className="relative h-32 laptop:rounded-t-lg py-5 bg-gradient-to-b from-indigo-700 to-indigo-500 rounded-b-[52px]">
       <span className="block text-center text-white mb-5 text-xl">Chats</span>
       <div className="flex justify-center">
         <div className="relative w-full mx-10 flex items-center">

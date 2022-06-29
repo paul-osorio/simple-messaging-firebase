@@ -6,7 +6,7 @@ import Divider from "../../../../components/Divider";
 
 const LoginForm = () => {
   return (
-    <div className="w-64 flex justify-center">
+    <div className="w-72 flex justify-center">
       <form action="" className="mt-5 w-full">
         <FloatingTextField label="Email Address" containerClass="mb-5" />
         <FloatingTextField label="Password" />

@@ -5,7 +5,7 @@ type Props = {
 const Card = ({ children }: Props) => {
   return (
     <div className="h-screen w-screen flex items-center justify-center">
-      <div className="bg-white mobile:w-full tablet:w-[500px]">{children}</div>
+      <div className="bg-white rounded-lg shadow px-7 py-3">{children}</div>
     </div>
   );
 };

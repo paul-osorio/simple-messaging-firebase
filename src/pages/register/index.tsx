@@ -1,4 +1,16 @@
+import Card from "../../components/Card";
+import Container from "../../components/Container";
+import Title from "../../components/Title";
+import RegisterForm from "./components/Form";
+
 const Register = () => {
-  return <h1>Register</h1>;
+  return (
+    <Container>
+      <Card>
+        <Title />
+        <RegisterForm />
+      </Card>
+    </Container>
+  );
 };
 export default Register;

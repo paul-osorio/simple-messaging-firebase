@@ -13,10 +13,10 @@ const MessageBox = ({ message, myMessage }: MessageProps) => {
     >
       <div
         className={
-          "p-3 break-words max-w-[80%] rounded-t-3xl " +
+          "px-3 py-2 shadow break-words max-w-[80%] rounded-t-3xl text-sm " +
           (myMessage
-            ? "rounded-bl-3xl bg-blue-300"
-            : "rounded-br-3xl bg-gray-300")
+            ? "rounded-bl-3xl bg-blue-200"
+            : "rounded-br-3xl bg-gray-100")
         }
       >
         {message}

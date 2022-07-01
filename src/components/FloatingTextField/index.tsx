@@ -1,15 +1,23 @@
-type TextFieldProps = {
+import { FieldHookConfig, useField } from "formik";
+
+interface MyProps {
   label: string;
   containerClass?: string;
-};
+  name: string;
+  type: string;
+}
 
-const FloatingTextField = ({ label, containerClass }: TextFieldProps) => {
+const FloatingTextField = (props: MyProps & FieldHookConfig<string>) => {
+  const [field, meta, helpers] = useField(props);
+
   return (
-    <div className={"relative " + containerClass}>
+    <div className={"relative " + props.containerClass}>
       <input
-        type="text"
+        {...field}
+        name={props.name}
+        type={props.type}
+        placeholder={props.label}
         className="border  placeholder-transparent transition-all w-full rounded-lg h-11 peer px-3 focus:border-indigo-300 outline-none"
-        placeholder="Email Address"
       />
       <label
         className="
@@ -28,8 +36,11 @@ const FloatingTextField = ({ label, containerClass }: TextFieldProps) => {
         transition-all
         "
       >
-        {label}
+        {props.label}
       </label>
+      {meta.touched && meta.error ? (
+        <div className="text-red-500 text-sm mt-2">{meta.error}</div>
+      ) : null}
     </div>
   );
 };

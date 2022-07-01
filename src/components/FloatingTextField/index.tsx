@@ -11,18 +11,28 @@ const FloatingTextField = (props: MyProps & FieldHookConfig<string>) => {
   const [field, meta, helpers] = useField(props);
 
   return (
-    <div className={"relative " + props.containerClass}>
+    <div className={"relative w-full " + props.containerClass}>
       <input
         {...field}
         name={props.name}
         type={props.type}
         placeholder={props.label}
-        className="border  placeholder-transparent transition-all w-full rounded-lg h-11 peer px-3 focus:border-indigo-300 outline-none"
+        autoComplete="off"
+        className={
+          (meta.touched && meta.error ? "border-red-400" : "") +
+          " border placeholder-transparent transition-all w-full rounded-lg h-11 peer px-3 focus:border-indigo-300 outline-none"
+        }
       />
       <label
         className="
         absolute
         text-sm
+        -top-2.5
+        left-2
+        text-gray-700
+        bg-white
+        text-sm
+        px-2
         pointer-events-none
         peer-placeholder-shown:top-3
         peer-placeholder-shown:left-3
@@ -39,7 +49,9 @@ const FloatingTextField = (props: MyProps & FieldHookConfig<string>) => {
         {props.label}
       </label>
       {meta.touched && meta.error ? (
-        <div className="text-red-500 text-sm mt-2">{meta.error}</div>
+        <div className="text-red-500 flex items-center">
+          <span className="text-[12px] ml-1">{meta.error}</span>
+        </div>
       ) : null}
     </div>
   );

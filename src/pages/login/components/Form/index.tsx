@@ -9,6 +9,7 @@ import {
   twitterLogin,
 } from "../../../../services/handleProvider";
 import { Form, Formik, FormikProps } from "formik";
+import LoginSchema from "../../../../validation/loginSchema";
 
 interface Values {
   email: string;
@@ -23,6 +24,7 @@ const LoginForm = () => {
           email: "",
           password: "",
         }}
+        validationSchema={LoginSchema}
         onSubmit={(values) => {
           console.log(values);
         }}

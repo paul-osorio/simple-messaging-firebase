@@ -10,7 +10,6 @@ import { auth } from "./services/firebase.config";
 
 function App() {
   useEffect(() => {
-    // signOut(auth);
     onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log("user", user);

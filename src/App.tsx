@@ -10,11 +10,12 @@ import { auth } from "./services/firebase.config";
 
 function App() {
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log("user", user);
-      }
-    });
+    // signOut(auth);
+    // onAuthStateChanged(auth, (user) => {
+    //   if (user) {
+    //     console.log("user", user);
+    //   }
+    // });
   }, []);
   return (
     <Routes>

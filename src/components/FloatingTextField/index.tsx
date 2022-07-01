@@ -5,6 +5,7 @@ interface MyProps {
   containerClass?: string;
   name: string;
   type: string;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 const FloatingTextField = (props: MyProps & FieldHookConfig<string>) => {
@@ -17,6 +18,7 @@ const FloatingTextField = (props: MyProps & FieldHookConfig<string>) => {
         name={props.name}
         type={props.type}
         placeholder={props.label}
+        onKeyDown={props.onKeyDown}
         autoComplete="off"
         className={
           (meta.touched && meta.error ? "border-red-400" : "") +

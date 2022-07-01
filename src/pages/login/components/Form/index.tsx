@@ -7,7 +7,7 @@ import {
   facebookLogin,
   googleLogin,
   twitterLogin,
-} from "../../../../services/handleProvider";
+} from "../../../../services/handleLogin";
 import { Form, Formik, FormikProps } from "formik";
 import LoginSchema from "../../../../validation/loginSchema";
 
@@ -48,7 +48,10 @@ const LoginForm = () => {
               </Link>
             </div>
 
-            <button className="w-full bg-gray-900 rounded hover:bg-gray-800 active:ring-blue-300 active:ring py-2 mt-3 text-white">
+            <button
+              type="submit"
+              className="w-full bg-gray-900 rounded hover:bg-gray-800 active:ring-blue-300 active:ring py-2 mt-3 text-white"
+            >
               Sign In
             </button>
             <LoginRegisterLink to="/Register" type="Login" />

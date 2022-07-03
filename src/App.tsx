@@ -13,10 +13,11 @@ function App() {
     // signOut(auth);
     // onAuthStateChanged(auth, (user) => {
     //   if (user) {
-    //     console.log("user", user);
+    //      console.log("user", user);
     //   }
     // });
   }, []);
+
   return (
     <Routes>
       <Route path="/" element={<Login />} />

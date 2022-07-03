@@ -1,6 +1,9 @@
 import HamburgerMenu from "../../../../assets/svg/HamburgerMenu";
+type Props = {
+  onClick: () => void;
+};
 
-const TopBar = () => {
+const TopBar = ({ onClick }: Props) => {
   return (
     <div className="relative h-32 laptop:rounded-t-3xl py-5 bg-gradient-to-b from-indigo-700 to-indigo-500 rounded-b-[52px]">
       <span className="block text-center text-white mb-5 text-xl">Chats</span>
@@ -18,7 +21,7 @@ const TopBar = () => {
           />
         </div>
       </div>
-      <div className="absolute top-3 right-3">
+      <div className="absolute top-3 right-3" role="button" onClick={onClick}>
         <HamburgerMenu />
       </div>
     </div>

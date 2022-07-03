@@ -10,8 +10,10 @@ import { setUserDocument } from "./handleDocuments";
 const googleLogin = async () => {
   try {
     const provider = new GoogleAuthProvider();
+    provider.addScope("email");
     const result = await signInWithPopup(auth, provider);
-    setUserDocument(result.user);
+
+    setUserDocument(result.user, "google");
   } catch (error) {
     console.log(error);
   }
@@ -20,8 +22,12 @@ const googleLogin = async () => {
 const twitterLogin = async () => {
   try {
     const provider = new TwitterAuthProvider();
+    provider.addScope("email");
     const result = await signInWithPopup(auth, provider);
-    setUserDocument(result.user);
+
+    console.log(result);
+
+    setUserDocument(result.user, "twitter");
   } catch (error) {
     console.log(error);
   }
@@ -30,8 +36,10 @@ const twitterLogin = async () => {
 const facebookLogin = async () => {
   try {
     const provider = new FacebookAuthProvider();
+    provider.addScope("email");
+
     const result = await signInWithPopup(auth, provider);
-    setUserDocument(result.user);
+    setUserDocument(result.user, "facebook");
   } catch (error) {
     console.log(error);
   }

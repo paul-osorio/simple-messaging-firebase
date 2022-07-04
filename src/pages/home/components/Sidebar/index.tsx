@@ -17,7 +17,7 @@ const Sidebar = ({ onClose }: SidebarProps) => {
         transition={{ type: "tween", duration: 0.2 }}
         exit={{ width: 0 }}
         onClick={(e) => e.stopPropagation()}
-        className=" h-full absolute z-10 shadow-3xl bg-white right-0 rounded-tr-3xl rounded-br-3xl"
+        className=" h-full absolute z-10 shadow-3xl bg-white right-0 laptop:rounded-tr-3xl laptop:rounded-br-3xl"
       >
         <motion.div
           initial={{ opacity: 0 }}
@@ -31,7 +31,13 @@ const Sidebar = ({ onClose }: SidebarProps) => {
           </div>
           <div className="flex justify-center">
             <div className="w-full absolute bottom-0 p-2">
-              <Button>Sign Out</Button>
+              <Button
+                onClick={() => {
+                  signOut(auth);
+                }}
+              >
+                Sign Out
+              </Button>
             </div>
           </div>
         </motion.div>

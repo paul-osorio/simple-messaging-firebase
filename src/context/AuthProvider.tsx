@@ -1,7 +1,6 @@
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { createContext, useContext, useEffect, useState } from "react";
-import { string } from "yup";
+import { createContext, useEffect, useState } from "react";
 import { auth, db } from "../services/firebase.config";
 
 interface AuthContextType {

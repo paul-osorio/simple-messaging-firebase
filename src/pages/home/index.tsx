@@ -1,17 +1,21 @@
 import MainContainer from "../../components/MainContainer";
 import ChatCard from "./components/ChatCard";
 import TopBar from "./components/TopBar";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import Sidebar from "./components/Sidebar";
 
 const Home = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const openSidebar = () => setShowSidebar(true);
+  const closeSidebar = () => setShowSidebar(false);
 
   return (
     <MainContainer>
-      {showSidebar && <Sidebar />}
+      <AnimatePresence>
+        {showSidebar && <Sidebar onClose={closeSidebar} />}
+      </AnimatePresence>
+
       <TopBar onClick={openSidebar} />
       <div style={{ height: "calc(100% - 128px)" }}>
         <div className="h-12 flex items-center">

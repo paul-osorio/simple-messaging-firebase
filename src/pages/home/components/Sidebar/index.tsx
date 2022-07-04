@@ -1,59 +1,42 @@
 import { signOut } from "firebase/auth";
-import { motion } from "framer-motion";
-import { useAuth } from "../../../../context/AuthProvider";
 import { auth } from "../../../../services/firebase.config";
+import { motion } from "framer-motion";
+import Backdrop from "./components/Backdrop";
+import ProfileDetails from "./components/Profile";
+import Button from "./components/Button";
+type SidebarProps = {
+  onClose: () => void;
+};
 
-const Sidebar = () => {
-  const data = useAuth();
-  const photo = data.user.photoUrl;
-  const fullname = data.user.fullname;
-  const email = data.user.email;
-
+const Sidebar = ({ onClose }: SidebarProps) => {
   return (
-    <motion.div className="bg-black/30 laptop:rounded-3xl w-full h-full absolute z-10">
+    <Backdrop onClose={onClose}>
       <motion.div
-        initial={{ opacity: 0, width: 0 }}
-        animate={{ opacity: 1, width: 250 }}
-        exit={{ opacity: 0, width: 0 }}
-        className=" h-full absolute z-10 shadow-3xl bg-white right-0"
+        initial={{ width: 0 }}
+        animate={{ width: 250 }}
+        transition={{ type: "tween", duration: 0.2 }}
+        exit={{ width: 0 }}
+        onClick={(e) => e.stopPropagation()}
+        className=" h-full absolute z-10 shadow-3xl bg-white right-0 rounded-tr-3xl rounded-br-3xl"
       >
-        <div className=" my-2 mx-2">
-          <button className="hover:bg-gray-100 rounded-full">
-            <img
-              src="https://www.svgrepo.com/show/347841/sidebar-collapse.svg"
-              className="h-5 m-1 w-5"
-              alt=""
-            />
-          </button>
-        </div>
-
-        <div className="w-full flex justify-center">
-          <img
-            src={photo}
-            className="rounded-full h-20 w-20 ring ring-indigo-500 "
-            alt=""
-          />
-        </div>
-        <span className="block text-center mt-3 font-medium leading-3">
-          {fullname}
-        </span>
-        <span className="block text-center mt-1 text-sm text-gray-500">
-          {email}
-        </span>
-
-        <div className="">
-          <span
-            role="button"
-            className="absolute bottom-0"
-            onClick={() => {
-              signOut(auth);
-            }}
-          >
-            Log Out
-          </span>
-        </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { duration: 0, delay: 0.15 } }}
+          exit={{ opacity: 0, transition: { duration: 0, delay: 0 } }}
+          className="h-full"
+        >
+          <ProfileDetails onClose={onClose} />
+          <div className="w-full  p-2">
+            <Button>View Profile</Button>
+          </div>
+          <div className="flex justify-center">
+            <div className="w-full absolute bottom-0 p-2">
+              <Button>Sign Out</Button>
+            </div>
+          </div>
+        </motion.div>
       </motion.div>
-    </motion.div>
+    </Backdrop>
   );
 };
 export default Sidebar;

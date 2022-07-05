@@ -31,9 +31,7 @@ const FloatingTextField = (props: MyProps & FieldHookConfig<string>) => {
         text-sm
         -top-2.5
         left-2
-        text-gray-700
         bg-white
-        text-sm
         px-2
         pointer-events-none
         peer-placeholder-shown:top-3

@@ -1,7 +1,9 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../context/AuthProvider";
 import useFetchUsers from "../../../../hooks/useFetchUsers";
+import { useFriendStatus } from "../../../../hooks/useFriendStatus";
+import useSearchUser from "../../../../hooks/useSearchUser";
 import { db } from "../../../../services/firebase.config";
 import ProfileCard from "../ProfileCard";
 
@@ -10,40 +12,32 @@ type Props = {
 };
 
 const SearchCard = ({ search }: Props) => {
-  const [isSearching, setIsSearching] = useState(false);
-  const { users, setUsers } = useFetchUsers();
   const auth = useContext(AuthContext);
-  const [searchArray, setSearchArray] = useState(users);
+  const { users } = useFetchUsers();
+  const { searchResult, isSearching } = useSearchUser(search, users);
 
-  useEffect(() => {
-    setIsSearching(true);
-    if (search) {
-      const searchArray = users.filter(
-        (user: any) =>
-          user.fullname.toLowerCase().includes(search.toLowerCase()) &&
-          user.id !== auth.uid
-      );
-      setSearchArray(searchArray);
-      setIsSearching(false);
-    } else {
-      setSearchArray([]);
-      setIsSearching(false);
-    }
-  }, [search]);
   return search ? (
-    <div className="h-full laptop:rounded-b-3xl pt-3">
+    <div className="h-full laptop:rounded-b-3xl pt-3 overflow-auto homescrollbar">
       {isSearching && (
         <div className="text-center text-gray-500">Searching...</div>
       )}
-      {!isSearching && (
+      {searchResult.length > 0 ? (
         <div className="">
-          {searchArray.map((val: any, i) => {
+          {searchResult.map((val: any, i) => {
             return <ProfileCard user={val} key={val.id} />;
           })}
         </div>
+      ) : (
+        <NotFoundError />
       )}
     </div>
   ) : (
+    <FindAFriend />
+  );
+};
+
+const FindAFriend = () => {
+  return (
     <div className="w-full h-full flex items-center justify-center">
       <div className="">
         <div className="flex justify-center opacity-80">
@@ -55,6 +49,24 @@ const SearchCard = ({ search }: Props) => {
         </div>
         <p className="text-center text-gray-400 mt-2 text-3xl font-light">
           Find A Friend
+        </p>
+      </div>
+    </div>
+  );
+};
+const NotFoundError = () => {
+  return (
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="">
+        <div className="flex justify-center opacity-80">
+          <img
+            src="https://www.svgrepo.com/show/52361/search.svg"
+            className="h-52 w-52"
+            alt=""
+          />
+        </div>
+        <p className="text-center text-gray-400 mt-2 text-2xl font-light">
+          Search not found!
         </p>
       </div>
     </div>

@@ -3,9 +3,29 @@ import {
   TwitterAuthProvider,
   FacebookAuthProvider,
   signInWithPopup,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
+import { useState } from "react";
 import { auth } from "./firebase.config";
 import { setUserDocument } from "./handleDocuments";
+
+const emailAndPasswordLogin = () => {
+  const [errorname, setErrorname] = useState<string>("");
+
+  const login = async (values: any) => {
+    try {
+      await signInWithEmailAndPassword(auth, values.email, values.password);
+    } catch (err: any) {
+      if (err.code === "auth/user-not-found") {
+        setErrorname("user-not-found");
+      } else if (err.code === "auth/wrong-password") {
+        setErrorname("wrong-password");
+      }
+    }
+  };
+
+  return { login, errorname, setErrorname };
+};
 
 const googleLogin = async () => {
   try {
@@ -45,4 +65,4 @@ const facebookLogin = async () => {
   }
 };
 
-export { googleLogin, twitterLogin, facebookLogin };
+export { googleLogin, twitterLogin, facebookLogin, emailAndPasswordLogin };

@@ -4,6 +4,7 @@ import LoginRegisterLink from "../../../../components/LoginRegisterLink";
 import ProviderButton from "../ProviderButton";
 import Divider from "../../../../components/Divider";
 import {
+  emailAndPasswordLogin,
   facebookLogin,
   googleLogin,
   twitterLogin,
@@ -17,6 +18,7 @@ interface Values {
 }
 
 const LoginForm = () => {
+  const { login, errorname, setErrorname } = emailAndPasswordLogin();
   return (
     <div className="w-72 flex justify-center">
       <Formik
@@ -25,23 +27,36 @@ const LoginForm = () => {
           password: "",
         }}
         validationSchema={LoginSchema}
-        onSubmit={(values) => {
-          console.log(values);
-        }}
+        onSubmit={login}
       >
         {(props: FormikProps<Values>) => (
           <Form className="w-full mt-5">
-            <FloatingTextField
-              label="Email Address"
-              name="email"
-              type="text"
-              containerClass="mb-5"
-            />
-            <FloatingTextField
-              label="Password"
-              type="password"
-              name="password"
-            />
+            <div className="mb-5">
+              <FloatingTextField
+                label="Email Address"
+                name="email"
+                type="text"
+                onKeyDown={() => setErrorname("")}
+              />
+              {errorname === "user-not-found" && (
+                <div className="text-red-500 flex items-center">
+                  <span className="text-[12px] ml-1">User not found</span>
+                </div>
+              )}
+            </div>
+            <div className="">
+              <FloatingTextField
+                label="Password"
+                type="password"
+                name="password"
+                onKeyDown={() => setErrorname("")}
+              />
+              {errorname === "wrong-password" && (
+                <div className="text-red-500 flex items-center">
+                  <span className="text-[12px] ml-1">Wrong Password</span>
+                </div>
+              )}
+            </div>
             <div className="flex justify-end">
               <Link to="/" className="text-sm text-gray-500">
                 Forgot Password

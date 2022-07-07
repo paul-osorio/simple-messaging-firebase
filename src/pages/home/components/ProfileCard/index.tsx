@@ -56,7 +56,7 @@ const ProfileCard = ({ user }: { user: any }) => {
                   : status === "Cancel Request"
                   ? "hover:bg-red-300 bg-red-200 text-red-900"
                   : "hover:bg-orange-300 bg-orange-200 text-orange-800") +
-                " text-xs  font-bold  mx-2 rounded px-3 py-2"
+                " text-xs  font-bold  mx-2 rounded-full px-3 py-1"
               }
             >
               {status}

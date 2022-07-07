@@ -16,7 +16,7 @@ function App() {
       </Route>
       <Route element={<PrivateRoute />}>
         <Route path="/" element={<Home />} />
-        <Route path="/message" element={<Message />} />
+        <Route path="/message/:id" element={<Message />} />
       </Route>
     </Routes>
   );

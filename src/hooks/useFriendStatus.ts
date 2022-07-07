@@ -5,7 +5,7 @@ import { db } from "../services/firebase.config";
 export const useFriendStatus = (uid: any, friendid: any) => {
   const [status, setStatus] = useState("Add Friend");
   const [docID, setDocID] = useState("");
-  const friendCollection = collection(db, "friendRequest");
+  const friendCollection = collection(db, "friends");
 
   useEffect(() => {
     const unsubscribe = onSnapshot(friendCollection, (snapshot: any) => {

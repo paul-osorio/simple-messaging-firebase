@@ -5,7 +5,7 @@ import { InfoIcon } from "../../../../assets/svg/InfoIcon";
 const TopBar = () => {
   return (
     <div className="h-20 flex items-center justify-between mx-5">
-      <Link to="/Home">
+      <Link to="/">
         <ArrowBack className="h-5 w-5 fill-white" />
       </Link>
       <div className="flex items-center space-x-2">

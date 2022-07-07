@@ -6,9 +6,9 @@ type Props = {
 
 const ProfileDetails = ({ onClose }: Props) => {
   const data = useContext(AuthContext);
-  const photo = data.user.photoUrl;
-  const fullname = data.user.fullname;
-  const email = data.user.email;
+  const photo = data.user?.photoUrl;
+  const fullname = data.user?.fullname;
+  const email = data.user?.email;
   return (
     <>
       <div className={"my-2 mx-2"}>

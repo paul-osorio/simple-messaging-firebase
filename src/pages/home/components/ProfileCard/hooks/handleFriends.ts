@@ -9,7 +9,7 @@ import {
 import { db } from "../../../../../services/firebase.config";
 
 export const handleAddFriend = async (uid: any, friendid: any) => {
-  const friendCollection = collection(db, "friendRequest");
+  const friendCollection = collection(db, "friends");
   const friendRef = doc(friendCollection);
 
   await setDoc(friendRef, {
@@ -21,7 +21,7 @@ export const handleAddFriend = async (uid: any, friendid: any) => {
 };
 
 export const handleCancelRequest = async (docID: any) => {
-  const docRef = doc(db, "friendRequest", docID);
+  const docRef = doc(db, "friends", docID);
   await updateDoc(docRef, {
     status: 2, //declined
   });
@@ -31,7 +31,7 @@ export const handleCancelRequest = async (docID: any) => {
 };
 
 export const handleAcceptRequest = async (docID: any) => {
-  const docRef = doc(db, "friendRequest", docID);
+  const docRef = doc(db, "friends", docID);
 
   await updateDoc(docRef, {
     status: 1, //accepted

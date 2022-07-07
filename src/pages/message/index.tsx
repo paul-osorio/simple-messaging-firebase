@@ -1,9 +1,12 @@
+import { useParams } from "react-router-dom";
 import MainContainer from "../../components/MainContainer";
 import MessageBox from "./components/MessageBox";
 import MessageTextfield from "./components/MessageTextfield";
 import TopBar from "./components/TopBar";
 
 const Message = () => {
+  const { id } = useParams();
+  console.log(id);
   return (
     <MainContainer>
       <div className="bg-gradient-to-b from-indigo-700 to-indigo-500 h-full laptop:rounded-3xl">

@@ -1,12 +1,22 @@
+import { useContext, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import MainContainer from "../../components/MainContainer";
+import { AuthContext } from "../../context/AuthProvider";
+import useMessages from "../../hooks/useMessages";
 import MessageBox from "./components/MessageBox";
 import MessageTextfield from "./components/MessageTextfield";
 import TopBar from "./components/TopBar";
 
 const Message = () => {
   const { id } = useParams();
-  console.log(id);
+  const auth = useContext(AuthContext);
+  const { conversation } = useMessages(auth?.uid, id);
+  const scrollRef: any = useRef(null);
+  const scrollToBottom = () => {
+    scrollRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+  useEffect(scrollToBottom, [conversation]);
+
   return (
     <MainContainer>
       <div className="bg-gradient-to-b from-indigo-700 to-indigo-500 h-full laptop:rounded-3xl">
@@ -20,16 +30,21 @@ const Message = () => {
               className="overflow-auto homescrollbar"
               style={{ height: "calc(100% - 80px)" }}
             >
-              <MessageBox message="Hello World" myMessage={true} />
-              <MessageBox message="Hello World" myMessage={true} />
-              <MessageBox message="Hello World" myMessage={false} />
-              <MessageBox message="Hello World" myMessage={false} />
-              <MessageBox message="Hello World" myMessage={false} />
-              <MessageBox message="Hello World" myMessage={true} />
-              <MessageBox message="Hello World" myMessage={true} />
-              <MessageBox message="Hello World" myMessage={true} />
-              <MessageBox message="Hello World" myMessage={true} />
-              <MessageBox message="Hello World" myMessage={false} />
+              {conversation.length > 0 ? (
+                conversation.map((data: any, index) => {
+                  return (
+                    <MessageBox
+                      key={index}
+                      message={data.message}
+                      timestamp={data.timestamp}
+                      myMessage={data.sender_id === auth.uid}
+                    />
+                  );
+                })
+              ) : (
+                <div className="text-center text-gray-500">No messages yet</div>
+              )}
+              <div ref={scrollRef}></div>
             </div>
             <MessageTextfield />
           </div>

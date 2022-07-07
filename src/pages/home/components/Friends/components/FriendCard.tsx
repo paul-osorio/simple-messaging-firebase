@@ -6,8 +6,9 @@ const FriendCard = ({ friend }: { friend: any }) => {
   const name = friend?.fullname;
   const email = friend?.email;
   const docID: any = friend?.docID;
+  const id: any = friend?.id;
   const navigate = useNavigate();
-  const goto = () => navigate(`/message/${docID}`);
+  const goto = () => navigate(`/message/${id}`);
 
   const unfriend = () => {
     handleCancelRequest(docID);
@@ -15,9 +16,9 @@ const FriendCard = ({ friend }: { friend: any }) => {
 
   return (
     <div>
-      <div className="w-full px-3 mb-3">
-        <div className="bg-white border rounded-xl flex justify-between items-center">
-          <div className="py-4 px-2 flex items-center">
+      <div className="w-full px-1 mb-3">
+        <div className="bg-white border rounded-2xl flex justify-between items-center">
+          <div className="py-3 px-3 flex items-center">
             <img src={profile} alt="" className="ring h-12 w-12 rounded-full" />
             <div className="ml-2">
               <p className="font-medium leading-3 text-gray-600">{name}</p>

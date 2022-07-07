@@ -16,3 +16,47 @@ body {
 .homescrollbar {
   scroll-behavior: smooth;
 }
+
+.timestamp-l:after {
+  content: attr(data-timestamp);
+  display: block;
+  font-size: 12px;
+  color: white;
+  border-radius: 5px;
+  margin-top: 0.5em;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  margin: 0px 5px;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 5px 10px;
+  visibility: hidden;
+  white-space: nowrap;
+}
+.timestamp-l:hover:after {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.5s;
+}
+
+.timestamp-r:after {
+  content: attr(data-timestamp);
+  display: block;
+  font-size: 12px;
+  color: white;
+  border-radius: 5px;
+  margin-top: 0.5em;
+  position: absolute;
+  top: 0;
+  right: 100%;
+  margin: 0px 5px;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 5px 10px;
+  visibility: hidden;
+  white-space: nowrap;
+}
+.timestamp-r:hover:after {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.5s;
+}

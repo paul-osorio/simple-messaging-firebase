@@ -1,14 +1,18 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../../../../context/AuthProvider";
+import useFetchProfile from "../../../../../../hooks/useFetchProfile";
 type Props = {
   onClose: () => void;
 };
 
 const ProfileDetails = ({ onClose }: Props) => {
-  const data = useContext(AuthContext);
-  const photo = data.user?.photoUrl;
-  const fullname = data.user?.fullname;
-  const email = data.user?.email;
+  const auth = useContext(AuthContext);
+  const uid = auth?.uid;
+  const data: any = useFetchProfile(uid);
+  const fullname = data?.fullname;
+  const email = data?.email;
+  const photoUrl = data?.photoUrl;
+
   return (
     <>
       <div className={"my-2 mx-2"}>
@@ -23,7 +27,7 @@ const ProfileDetails = ({ onClose }: Props) => {
 
       <div className="w-full flex justify-center">
         <img
-          src={photo}
+          src={photoUrl}
           className="rounded-full h-20 w-20 ring ring-indigo-500 "
           alt=""
         />

@@ -93,7 +93,7 @@ const RespondButton = ({ docID }: { docID: any }) => {
       {isOpen && (
         <div
           ref={ref}
-          className="absolute bg-white  py-2 w-32 right-0 rounded-lg shadow shadow-gray-300 top-10 font-normal"
+          className="z-50 absolute bg-white  py-2 w-32 right-0 rounded-lg shadow shadow-gray-300 top-10 font-normal"
         >
           <button
             onClick={accept}

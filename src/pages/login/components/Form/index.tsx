@@ -11,6 +11,8 @@ import {
 } from "../../../../services/handleLogin";
 import { Form, Formik, FormikProps } from "formik";
 import LoginSchema from "../../../../validation/loginSchema";
+import { useContext } from "react";
+import { AuthContext } from "../../../../context/AuthProvider";
 
 interface Values {
   email: string;
@@ -19,6 +21,8 @@ interface Values {
 
 const LoginForm = () => {
   const { login, errorname, setErrorname } = emailAndPasswordLogin();
+  const { loginError, setLoginError } = useContext(AuthContext);
+
   return (
     <div className="w-72 flex justify-center">
       <Formik
@@ -30,13 +34,23 @@ const LoginForm = () => {
         onSubmit={login}
       >
         {(props: FormikProps<Values>) => (
-          <Form className="w-full mt-5">
+          <Form className="w-full mt-4">
+            {loginError && (
+              <div className="text-red-500 block text-center items-center">
+                <span className="text-[12px]">
+                  Please verified your email address to continue.
+                </span>
+              </div>
+            )}
             <div className="mb-5">
               <FloatingTextField
                 label="Email Address"
                 name="email"
                 type="text"
-                onKeyDown={() => setErrorname("")}
+                onKeyDown={() => {
+                  setErrorname("");
+                  setLoginError("");
+                }}
               />
               {errorname === "user-not-found" && (
                 <div className="text-red-500 flex items-center">
@@ -50,6 +64,7 @@ const LoginForm = () => {
                 type="password"
                 name="password"
                 onKeyDown={() => setErrorname("")}
+                onFocus={() => setErrorname("")}
               />
               {errorname === "wrong-password" && (
                 <div className="text-red-500 flex items-center">
@@ -58,7 +73,7 @@ const LoginForm = () => {
               )}
             </div>
             <div className="flex justify-end">
-              <Link to="/" className="text-sm text-gray-500">
+              <Link to="/forgotpassword" className="text-sm text-gray-500">
                 Forgot Password
               </Link>
             </div>

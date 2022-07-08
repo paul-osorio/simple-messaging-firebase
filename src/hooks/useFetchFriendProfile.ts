@@ -17,7 +17,6 @@ const useFetchFriendProfile = (friend: any) => {
       };
     });
     Promise.all(data2).then((data: any) => {
-      console.log(data);
       setFriendList(data);
     });
     setIsLoading(false);

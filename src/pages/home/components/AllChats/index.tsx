@@ -14,12 +14,27 @@ const AllChat = () => {
         className="px-5  overflow-auto homescrollbar"
         style={{ height: "calc(100% - 48px)" }}
       >
-        <div className="">
-          {loading && "Loading..."}
-
-          {data.map((item: any) => {
-            return <ChatCard data={item} key={item?.id} />;
-          })}
+        <div className="h-full">
+          {loading ? (
+            "Loading..."
+          ) : data.length <= 0 ? (
+            <div className="mt-10">
+              <div className="flex justify-center">
+                <img
+                  src="https://www.svgrepo.com/show/15425/chat.svg"
+                  className="w-52 h-52 opacity-50"
+                  alt=""
+                />
+              </div>
+              <span className="block text-center text-gray-400 text-lg">
+                No Chats Yet
+              </span>
+            </div>
+          ) : (
+            data.map((item: any) => {
+              return <ChatCard data={item} key={item?.id} />;
+            })
+          )}
         </div>
       </div>
     </div>

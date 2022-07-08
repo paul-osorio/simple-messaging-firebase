@@ -8,7 +8,7 @@ import {
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../context/AuthProvider";
-import { useFetchLastMessage } from "../../../../hooks/useFetchMessage";
+import useTimeAgo from "../../../../hooks/useTimeAgo";
 import { db } from "../../../../services/firebase.config";
 
 type Props = {
@@ -18,8 +18,10 @@ type Props = {
 const ChatCard = ({ data }: Props) => {
   const name = data?.fullname;
   const profile = data?.photoUrl;
+  const [messageData, setMessageData] = useState<any>({});
   const [lastMessage, setLastMessage] = useState("");
   const [timestamp, setTimestamp] = useState<any>(null);
+  const timeAgo = useTimeAgo();
   const auth = useContext(AuthContext);
   const uid = auth?.uid;
 
@@ -27,34 +29,58 @@ const ChatCard = ({ data }: Props) => {
     const q = query(collection(db, "messages"), orderBy("timestamp", "asc"));
 
     onSnapshot(q, (snap: any) => {
-      var mess = "";
-      var time: any = null;
+      var messagedata = {};
+
       snap.docs.map((val: any) => {
-        const { sender_id, receiver_id, message, timestamp } = val.data();
+        const { sender_id, receiver_id, message, timestamp, isRead } =
+          val.data();
         if (sender_id === uid && receiver_id === data?.id) {
-          mess = message;
-          time = timestamp;
+          messagedata = {
+            message,
+            timestamp: timeAgo(timestamp.seconds * 1000),
+            mymessage: true,
+            isRead: true,
+          };
         } else if (sender_id === data?.id && receiver_id === uid) {
-          mess = message;
-          time = timestamp;
+          messagedata = {
+            message,
+            mymessage: false,
+            timestamp: timeAgo(timestamp.seconds * 1000),
+            isRead,
+          };
         }
       });
-      setLastMessage(mess);
-      setTimestamp(timeAgo(time.seconds * 1000));
+      setMessageData(messagedata);
     });
   }, []);
 
   return (
     <Link to={`/message/${data?.id}`}>
-      <div className="shadow bg-gray-50 rounded-xl py-3 w-full flex items-center mb-4">
+      <div
+        className={
+          (messageData.isRead
+            ? "bg-gray-50 border border-gray-50"
+            : "bg-amber-50 border-amber-200 border") +
+          " shadow  rounded-xl py-3 w-full flex items-center mb-4"
+        }
+      >
         <img src={profile} alt="" className="h-10 w-10 rounded-full mx-5" />
 
         <div className="w-full mr-5">
           <div className="flex items-center justify-between">
             <span className="block font-medium">{name}</span>
-            <span className="text-xs text-gray-500">{timestamp}</span>
+            <span className="text-xs text-gray-500">
+              {messageData.timestamp}
+            </span>
           </div>
-          <span className="block text-gray-400 text-sm">{lastMessage}</span>
+          <span
+            className={
+              (messageData.isRead ? "text-gray-400" : "font-bold text-black") +
+              " block  text-sm"
+            }
+          >
+            {messageData.mymessage ? "You: " : ""} {messageData.message}
+          </span>
         </div>
       </div>
     </Link>
@@ -62,27 +88,5 @@ const ChatCard = ({ data }: Props) => {
 };
 
 //calculate time ago from date
-const timeAgo = (date: any) => {
-  const seconds = Math.floor((new Date().getTime() - date) / 1000);
-  let interval = Math.floor(seconds / 31536000);
-
-  interval = Math.floor(seconds / 604800);
-  if (interval > 1) {
-    return interval + "w";
-  }
-  interval = Math.floor(seconds / 86400);
-  if (interval > 1) {
-    return interval + "d";
-  }
-  interval = Math.floor(seconds / 3600);
-  if (interval > 1) {
-    return interval + "h";
-  }
-  interval = Math.floor(seconds / 60);
-  if (interval > 1) {
-    return interval + "m";
-  }
-  return Math.floor(seconds) + "s";
-};
 
 export default ChatCard;

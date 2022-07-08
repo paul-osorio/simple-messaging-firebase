@@ -59,6 +59,7 @@ const useMessages = (uid: any, friendid: any) => {
           doc.data().receiver_id === friendid
         ) {
           data2.push({
+            docID: doc.id,
             ...doc.data(),
           });
         } else if (
@@ -66,6 +67,7 @@ const useMessages = (uid: any, friendid: any) => {
           doc.data().receiver_id === uid
         ) {
           data2.push({
+            docID: doc.id,
             ...doc.data(),
           });
         }

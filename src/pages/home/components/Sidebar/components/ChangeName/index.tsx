@@ -1,14 +1,24 @@
-import { doc, updateDoc } from "firebase/firestore";
-import { useContext, useState } from "react";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../../context/AuthProvider";
+import useFetchProfile from "../../../../../../hooks/useFetchProfile";
 import { db } from "../../../../../../services/firebase.config";
 import Backdrop from "../Backdrop";
 
 const ChangeName = ({ onClose }: { onClose: any }) => {
   const auth = useContext(AuthContext);
-  const [name, setName] = useState(auth?.user?.fullname);
+  const [name, setName] = useState("");
   const [error, setError] = useState("");
   const uid = auth?.uid;
+  const fetchProf = async () => {
+    const docRef = doc(db, "users", uid);
+    const userdata: any = await getDoc(docRef);
+    setName(userdata.data().fullname);
+  };
+
+  useEffect(() => {
+    fetchProf();
+  }, [auth]);
 
   const onSave = async () => {
     const docRef = doc(db, "users", uid);
